@@ -83,24 +83,24 @@ body {
 
 @media only screen and (max-width: 1060px) {
     .container-fluid {
-        max-width: 50vw;
+        max-width: 70vw;
     }
 }
 
 @media only screen and (max-width: 900px) {
     .container-fluid {
-        max-width: 60vw;
+        max-width: 70vw;
     }
 }
 
 @media only screen and (max-width: 770px) {
     .container-fluid {
-        max-width: 80vw;
+        max-width: 90vw;
     }
 }
 
 @media only screen and (max-width: 500px) {
     .container-fluid {
-        max-width: 80vw;
+        max-width: 90vw;
     }
 }
