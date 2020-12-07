@@ -4,7 +4,18 @@
 
 body {
     background-color: #f6f6f6;
-    padding: 30px 0;
+    /* padding: 30px 0; */
+}
+
+#header {
+    /* background-color: #040D29; */
+    background-color: #6EC1E4;
+    margin-bottom: 30px;
+}
+
+img {
+    width: 20vw;
+    height: 20vh;
 }
 
 .container-fluid {
@@ -79,6 +90,11 @@ body {
     .container-fluid {
         max-width: 50vw;
     }
+
+    img {
+        width: 30vw;
+        height: 30vh;
+    }
 }
 
 @media only screen and (max-width: 1060px) {
@@ -97,10 +113,20 @@ body {
     .container-fluid {
         max-width: 90vw;
     }
+
+    img {
+        width: 40vw;
+        height: 40vh;
+    }
 }
 
 @media only screen and (max-width: 500px) {
     .container-fluid {
         max-width: 90vw;
+    }
+
+    img {
+        width: 50vw;
+        height: 50vh;
     }
 }

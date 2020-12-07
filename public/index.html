@@ -17,7 +17,11 @@
 	<title>Calculadora Solar</title>
 </head>
 <body ng-controller="Calculadora">
-	<div class="container-fluid">
+    <div id="header">
+        <img src="assets/logo.png" class="img-fluid" alt="Logo da Empresa">
+    </div>
+    
+    <div class="container-fluid">
         <h4 ng-if="cdInput === 'grupo'">Estimativa de Investimento:</h4>
         <div class="row">
             <input class="col" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ui-br-cep-mask>
