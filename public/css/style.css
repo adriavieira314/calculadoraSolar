@@ -26,7 +26,7 @@ img {
     box-shadow: 10px 10px 8px #888888;
 }
 
-.container-fluid input {
+.container-fluid .inputdigita {
     background: none;
     border: none;
     box-shadow: none;
@@ -43,6 +43,25 @@ img {
     font-weight: 500;
 }
 
+#uf,
+#cidade {
+    color: #f6f6f6;
+    font-weight: 500;
+}
+
+#resultado {
+    font-size: 30px;
+    text-align: center;
+    padding: 0;
+    line-height: 0;
+    color: #f6f6f6;
+    font-weight: 500;
+}
+
+.btn {
+    height: 40px;
+}
+
 .container-fluid select {
     color: #f6f6f6;
     font-weight: 500;
@@ -54,10 +73,6 @@ img {
 
 .calc-button {
     margin: 15px 5px;
-}
-
-.btn {
-    height: 40px;
 }
 
 .select-button:active {

@@ -24,32 +24,33 @@
     <div class="container-fluid">
         <h4 ng-if="cdInput === 'grupo'">Estimativa de Investimento:</h4>
         <div class="row">
-            <input class="col" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ui-br-cep-mask>
-            <input id="valorInput" class="col" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
-            <input id="valorInput" class="col" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
-            <input id="valorInput" class="col" placeholder="{{investimento}}" ng-show="cdInput === 'grupo'">
+            <input id="cep" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ui-br-cep-mask>
+            <input id="valorInput" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
+            <input id="valorInput" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
+            <input id="valorInput" class="col inputdigita" placeholder="{{investimento}}" ng-show="cdInput === 'grupo'">
         </div>
 
 		<div class="botoes">
             <div class="row justify-content-end">
                 <button id="btn-apagar" class="select-button btn col-2 calc-button" ng-click="apagar()">C</button>
             </div>
+
             <div class="row">
                 <button class="select-button btn btn-selecionar col-6 calc-button" ng-click="cep()">CEP</button>
-                <button class="btn btn-mostrar col calc-button">Estado</button> 
-                <button class="btn btn-mostrar col calc-button">Cidade</button>
+                <input id="uf" class="btn btn-mostrar col calc-button" value="Estado" readonly></input> 
+                <input id="cidade" class="btn btn-mostrar col calc-button" value="Cidade" readonly></input>
             </div>
     
             <div class="row">
-                <select class="select-button btn btn-selecionar col calc-button" ng-options="valor.titulo for valor in energiaOuValor" ng-model="selectedValor" ng-change="valor()">
+                <select ng-disabled="cepInformado == false" class="select-button btn btn-selecionar col calc-button" ng-options="valor.titulo for valor in energiaOuValor" ng-model="selectedValor" ng-change="valor()">
                     <option value="" hidden>Valor Kwh</option>
                 </select> 
                 
-                <select id="painelSelect" class="select-button btn btn-selecionar col calc-button" ng-options="painel.potencia for painel in potenciaPainel" ng-model="selectedPotPainel" ng-change="painel()">
+                <select ng-disabled="cepInformado == false" id="painelSelect" class="select-button btn btn-selecionar col calc-button" ng-options="painel.potencia for painel in potenciaPainel" ng-model="selectedPotPainel" ng-change="painel()">
                     <option value="" hidden>Pot. Painel</option>
                 </select>
 
-                <select class="select-button btn btn-selecionar col calc-button">
+                <select ng-disabled="cepInformado == false" class="select-button btn btn-selecionar col calc-button">
                     <option value="" hidden>Estrutura</option>
                     <option value="1">Metálica</option>
                     <option value="2">Colonial</option>
@@ -79,8 +80,8 @@
             </div>
     
             <div class="row">
-                <button class="btn btn-mostrar col-8 calc-button">{{grupo}}</button>
-                <button class="select-button btn btn-selecionar col calc-button" ng-click="resultado()">&equals;</button>
+                <button id="grupo" class="btn btn-mostrar col-8 calc-button">{{grupo}}</button>
+                <button id="resultado" class="select-button btn btn-selecionar col calc-button" ng-click="resultado()">&equals;</button>
             </div>
         </div>
     </div>
@@ -103,5 +104,7 @@
             </div>
         </div>
     </div>
+
+    
 </body>
 </html>

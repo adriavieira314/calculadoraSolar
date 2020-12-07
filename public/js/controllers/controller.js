@@ -2,6 +2,8 @@ var app = angular.module('CalculadoraSolar', ['ui.utils.masks']);
 
 app.controller('Calculadora', ['$scope', function($scope) {
 	$scope.inputCEP = "";
+	$scope.inputCidade = "Cidade";
+	$scope.inputUF = "Estado";
 	$scope.inputValor = "";
     $scope.cdInput = "cep";
     $scope.mascara = "0";
@@ -10,6 +12,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
     $scope.paineisText = "";
     $scope.potPicoText = "";
     $scope.grupo = "Grupo";
+    $scope.cepInformado = false;
 
     // listas para os selects
     $scope.energiaOuValor = [
@@ -188,5 +191,47 @@ app.controller('Calculadora', ['$scope', function($scope) {
             // $scope.inputValor = $scope.investimento;        
         }
     }
-    
+
+    //busca pelo CEP pelo site viaCEP
+    //Quando o campo cep perde o foco.
+    $("#cep").blur(function() {
+        //Verifica se campo cep possui valor informado.
+        if ($scope.inputCEP !== "") {
+            //Expressão regular para validar o CEP.
+            var validacep = /^[0-9]{8}$/;
+
+            //Valida o formato do CEP.
+            if(validacep.test($scope.inputCEP)) {
+                //Preenche os campos com "..." enquanto consulta webservice.
+                $scope.cepInformado = true;
+                $("#cidade").val("...");
+                $("#uf").val("...");
+
+                //Consulta o webservice viacep.com.br/
+                $.getJSON("https://viacep.com.br/ws/"+ $scope.inputCEP +"/json/?callback=?", function(dados) {
+                }).done(function(dados) {
+                    if (!("erro" in dados)) {
+                        //Atualiza os campos com os valores da consulta.
+                        // $scope.inputCidade = dados.localidade;
+                        // $scope.inputUF = dados.uf;
+                        
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                    } else {
+                            //CEP pesquisado não foi encontrado.
+                            alert("CEP não encontrado.");
+                        }
+                    console.log( "second success" );
+                })
+                .fail(function(error) {
+                    console.log( "error" + error );
+                });
+            } //end if.
+            else {
+                //cep é inválido.
+                alert("Formato de CEP inválido.");
+            }
+        } //end if.
+    });
+
 }]);
