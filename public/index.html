@@ -25,9 +25,9 @@
         <h4 ng-if="cdInput === 'grupo'">Estimativa de Investimento:</h4>
         <div class="row">
             <input id="cep" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ui-br-cep-mask>
-            <input id="valorInput" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
-            <input id="valorInput" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
-            <input id="valorInput" class="col inputdigita" placeholder="{{investimento}}" ng-show="cdInput === 'grupo'">
+            <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
+            <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
+            <input class="col inputdigita" placeholder="{{investimento}}" ng-show="cdInput === 'grupo'">
         </div>
 
 		<div class="botoes">
@@ -42,7 +42,7 @@
             </div>
     
             <div class="row">
-                <select ng-disabled="cepInformado == false" class="select-button btn btn-selecionar col calc-button" ng-options="valor.titulo for valor in energiaOuValor" ng-model="selectedValor" ng-change="valor()">
+                <select ng-disabled="cepInformado == false" class="select-button btn btn-selecionar col calc-button" ng-options="valor.titulo for valor in energiaOuValor" ng-model="selectedValor" ng-click="foco()" ng-change="valor()">
                     <option value="" hidden>Valor Kwh</option>
                 </select> 
                 
@@ -50,7 +50,7 @@
                     <option value="" hidden>Pot. Painel</option>
                 </select>
 
-                <select ng-disabled="cepInformado == false" class="select-button btn btn-selecionar col calc-button">
+                <select ng-disabled="valorInformado == false" class="select-button btn btn-selecionar col calc-button" ng-model="selectedEstrutura" ng-change="estrutura()">
                     <option value="" hidden>Estrutura</option>
                     <option value="1">Metálica</option>
                     <option value="2">Colonial</option>
@@ -81,7 +81,7 @@
     
             <div class="row">
                 <button id="grupo" class="btn btn-mostrar col-8 calc-button">{{grupo}}</button>
-                <button id="resultado" class="select-button btn btn-selecionar col calc-button" ng-click="resultado()">&equals;</button>
+                <button id="resultado" class="select-button btn btn-selecionar col calc-button" ng-disabled="estruturaInformada == false" ng-click="resultado()">&equals;</button>
             </div>
         </div>
     </div>

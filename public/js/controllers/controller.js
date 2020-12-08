@@ -3,8 +3,6 @@ var app = angular.module('CalculadoraSolar', ['ui.utils.masks']);
 app.controller('Calculadora', ['$scope', function($scope) {
     const today = new Date();
     const monName = new Array ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
-    console.log(today.getMonth());
-    console.log(monName [today.getMonth()]);
 	$scope.inputCEP = "";
 	$scope.inputValor = "";
     $scope.cdInput = "cep";
@@ -15,6 +13,8 @@ app.controller('Calculadora', ['$scope', function($scope) {
     $scope.potPicoText = "";
     $scope.grupo = "Grupo";
     $scope.cepInformado = false;
+    $scope.valorInformado = false;
+    $scope.estruturaInformada = false;
 
     // listas para os selects
     $scope.energiaOuValor = [
@@ -33,34 +33,58 @@ app.controller('Calculadora', ['$scope', function($scope) {
         $scope.cdInput = "cep";
     }
 
+    // $scope.foco = function() {
+    //     $scope.cdInput = "kwh";
+    // }
+
     // funcoes para quando o select mudar
-    $scope.valor = function(id) {
-        
+    $scope.valor = function() {
         if ($scope.selectedValor.id === 1) {
             $scope.cdInput = "kwh";
             $scope.mascara = "Consumo (kWh)";
             $scope.inputValor = "";
+            
+            setTimeout(function() {
+                $(".inputdigita").focus();
+            })
 
-            // var timer = null;
-            // $('#valorInput').keyup(function(){
-            //     clearTimeout(timer); 
-            //     timer = setTimeout($scope.energia = $scope.inputValor, 400);
-            //     timer = setTimeout(calculoPotenciaPico, 500);
-            // });
+            finalizaDigitar();
 
         } else {
             $scope.cdInput = "reais";
             $scope.inputValor = "";
             $scope.mascara = "R$";
-            //aguarda 400 milisegundos depois do usuario terminar de digitar para fazer o calculo
-            // var timer = null;
-            // $('#valorInput').keyup(function(){
-            //     clearTimeout(timer);
-            //     timer = setTimeout(calculoEnergia, 400);
-            //     timer = setTimeout(calculoPotenciaPico, 500);
-            // });
-        }
 
+            setTimeout(function() {
+                $(".inputdigita").focus();
+            });
+            
+            finalizaDigitar();
+            
+        }
+    }
+
+    finalizaDigitar = function() {
+        //verifica quando o usuario terminar de digitar e ativa os outros selects depois de 1 segundo
+        var typingTimer;                
+        var doneTypingInterval = 1000;
+        var $input = $('.valorInput');
+
+        //quando keyup, comeca a contagem
+        $input.on('keyup', function () {
+            clearTimeout(typingTimer);
+            typingTimer = setTimeout(doneTyping, doneTypingInterval);
+        });
+
+        //quando keydown, limpa a contagem 
+        $input.on('keydown', function () {
+            clearTimeout(typingTimer);
+        });
+
+        //usuario "terminou de digitar" faça algo
+        doneTyping = function() {
+            $scope.valorInformado = true;
+        }
     }
 
     $scope.painel = function(id) {
@@ -82,6 +106,10 @@ app.controller('Calculadora', ['$scope', function($scope) {
             // setTimeout(calculoQtdPaineis, 400);
             // setTimeout(calculoArea, 500);
         }
+    }
+
+    $scope.estrutura = function(id) {
+        $scope.estruturaInformada = true;
     }
     //fim
 
