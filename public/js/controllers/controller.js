@@ -1,12 +1,14 @@
 var app = angular.module('CalculadoraSolar', ['ui.utils.masks']);
 
 app.controller('Calculadora', ['$scope', function($scope) {
+    const today = new Date();
+    const monName = new Array ("JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC");
+    console.log(today.getMonth());
+    console.log(monName [today.getMonth()]);
 	$scope.inputCEP = "";
-	$scope.inputCidade = "Cidade";
-	$scope.inputUF = "Estado";
 	$scope.inputValor = "";
     $scope.cdInput = "cep";
-    $scope.mascara = "0";
+    $scope.mascara = "0000-000";
     $scope.energiaText = "";
     $scope.areaText = "";
     $scope.paineisText = "";
@@ -88,7 +90,6 @@ app.controller('Calculadora', ['$scope', function($scope) {
         calculoPotenciaPico();
         calculoQtdPaineis();
         calculoArea();
-        calculoPotenciaPico();
         valorInvestimento();
         grupo();
         
@@ -99,6 +100,9 @@ app.controller('Calculadora', ['$scope', function($scope) {
     }
 
     $scope.apagar = function() {
+        $scope.inputCEP = "";
+        $("#cidade").val("Cidade");
+        $("#uf").val("Estado");
         $scope.energiaText = "";
         $scope.energia = "";
         $scope.potPicoText = "";
@@ -114,6 +118,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
         $scope.investimento = "";
         $scope.selectedValor = "";
         $scope.selectedPotPainel = "";
+        $scope.cepInformado = false;
     }
 
     calculoEnergia = function(id) {
@@ -126,7 +131,9 @@ app.controller('Calculadora', ['$scope', function($scope) {
     }
     
     calculoPotenciaPico = function() {
-        $scope.potPico = $scope.energia/(30 * 4.33 * 0.80);
+        console.log("Variavel:" + $scope.irradiacaoSolar);
+        $scope.potPico = $scope.energia/(30 * $scope.irradiacaoSolar * 0.80);
+        console.log($scope.potPico);
     }
 
     calculoQtdPaineis = function() {
@@ -135,6 +142,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
         if ($scope.paineis %  2 === 1) {
             $scope.paineis++;
         }
+        console.log(painel);
         console.log($scope.paineis);
     }
 
@@ -211,17 +219,17 @@ app.controller('Calculadora', ['$scope', function($scope) {
                 $.getJSON("https://viacep.com.br/ws/"+ $scope.inputCEP +"/json/?callback=?", function(dados) {
                 }).done(function(dados) {
                     if (!("erro" in dados)) {
-                        //Atualiza os campos com os valores da consulta.
-                        // $scope.inputCidade = dados.localidade;
-                        // $scope.inputUF = dados.uf;
-                        
-                            $("#cidade").val(dados.localidade);
-                            $("#uf").val(dados.uf);
+                        //Atualiza os campos com os valores da consulta.                        
+                        $("#cidade").val(dados.localidade);
+                        $("#uf").val(dados.uf);
+                        buscaIrradiacao(dados.localidade);
                     } else {
-                            //CEP pesquisado não foi encontrado.
-                            alert("CEP não encontrado.");
-                        }
-                    console.log( "second success" );
+                        //CEP pesquisado não foi encontrado.
+                        $scope.cepInformado = false;
+                        alert("CEP não encontrado.");
+                        $("#cidade").val("Cidade");
+                        $("#uf").val("Estado");
+                    }
                 })
                 .fail(function(error) {
                     console.log( "error" + error );
@@ -233,5 +241,27 @@ app.controller('Calculadora', ['$scope', function($scope) {
             }
         } //end if.
     });
+
+    buscaIrradiacao = function(localidade) {
+        $.getJSON("../../assets/json/dadosIrradiacao.json", function(dados) {
+        }).done(function(dados) {
+            //codigo que retira o acento e outros caracteres especiais
+            var local = localidade.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
+            console.log(local);
+            var mes = monName[today.getMonth()];
+
+            for (let index = 0; index < dados.length; index++) {
+                if (dados[index].name === local) {
+                    $scope.irradiacaoSolar = dados[index][mes];
+                    console.log("Mes: " + mes + ' Irradiacao: ' + dados[index][mes]);
+                }
+            }
+        })
+        .fail(function(error) {
+            alert("Erro ao carregar os dados da Irradiação");
+            console.error(error)
+        });
+    }
+    
 
 }]);
