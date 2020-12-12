@@ -4,11 +4,9 @@
 
 body {
     background-color: #f6f6f6;
-    /* padding: 30px 0; */
 }
 
 #header {
-    /* background-color: #040D29; */
     background-color: #6EC1E4;
     margin-bottom: 30px;
 }
@@ -18,12 +16,19 @@ img {
     height: 20vh;
 }
 
+#marca-calc {
+    width: 13vw;
+    height: 5vh;
+}
+
 .container-fluid {
     max-width: 36vw;
+    /* height: 90vh; */
     margin: 0 auto;
     border: 2px solid #111;
-    border-radius: 10px;
+    border-radius: 20px;
     box-shadow: 10px 10px 8px #888888;
+    background-color: #F5F5F5;
 }
 
 .container-fluid .inputdigita {
@@ -31,11 +36,11 @@ img {
     border: none;
     box-shadow: none;
     width: 100%;
-    height: 100px;
-    border-bottom: 2px solid #111;
-    padding: 20px;
+    height: 80px;
+    padding: 0px 20px 30px 0;
     text-align: right;
     font-size: 60px;
+    outline: none;
 }
 
 .container-fluid button {
@@ -43,10 +48,30 @@ img {
     font-weight: 500;
 }
 
+.container-fluid .div-input {
+    background-color: #fff;
+    border: 2px solid #111;
+    margin: 30px 5px 0px 5px;
+    border-radius: 20px;
+}
+
+.heading-input {
+    margin-left: 20px;
+}
+
+.container-fluid .botoes {
+    border: 2px solid #111;
+    margin: 30px 5px;
+    border-radius: 20px;
+}
+
 #uf,
 #cidade {
     color: #f6f6f6;
     font-weight: 500;
+    overflow: auto;
+    white-space: normal;
+    word-wrap: break-word;
 }
 
 #resultado {
@@ -68,7 +93,8 @@ img {
 }
 
 .botoes {
-    padding: 20px;
+    background-color: #fff;
+    padding: 0px 20px 20px 20px;
 }
 
 .calc-button {
@@ -114,19 +140,19 @@ img {
 
 @media only screen and (max-width: 1060px) {
     .container-fluid {
-        max-width: 70vw;
+        max-width: 50vw;
     }
 }
 
 @media only screen and (max-width: 900px) {
     .container-fluid {
-        max-width: 70vw;
+        max-width: 60vw;
     }
 }
 
 @media only screen and (max-width: 770px) {
     .container-fluid {
-        max-width: 90vw;
+        max-width: 60vw;
     }
 
     img {
@@ -137,11 +163,15 @@ img {
 
 @media only screen and (max-width: 500px) {
     .container-fluid {
-        max-width: 90vw;
+        max-width: 80vw;
     }
 
     img {
         width: 50vw;
         height: 50vh;
+    }
+
+    .container-fluid .inputdigita {
+        font-size: 3em;
     }
 }
