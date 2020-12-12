@@ -163,7 +163,7 @@ img {
 
 @media only screen and (max-width: 500px) {
     .container-fluid {
-        max-width: 80vw;
+        max-width: 90vw;
     }
 
     img {
