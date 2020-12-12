@@ -15,6 +15,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
     $scope.cepInformado = false;
     $scope.valorInformado = false;
     $scope.estruturaInformada = false;
+    $scope.potPainel = 410/1000;
 
     // listas para os selects
     $scope.energiaOuValor = [
@@ -28,14 +29,18 @@ app.controller('Calculadora', ['$scope', function($scope) {
         {id: 3, potencia: "440W"}
     ]
 
+    $scope.estruturas = [
+        {id: 1, nome: "Metálica"},
+        {id: 2, nome: "Colonial"},
+        {id: 3, nome: "Laje"},
+        {id: 4, nome: "Solo"},
+        {id: 5, nome: "Fibrocimento"}
+    ]
+    
     $scope.cep = function() {
         $scope.mascara = "0000-000";
         $scope.cdInput = "cep";
     }
-
-    // $scope.foco = function() {
-    //     $scope.cdInput = "kwh";
-    // }
 
     // funcoes para quando o select mudar
     $scope.valor = function() {
@@ -46,7 +51,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
             
             setTimeout(function() {
                 $(".inputdigita").focus();
-            })
+            });
 
             finalizaDigitar();
 
@@ -60,7 +65,6 @@ app.controller('Calculadora', ['$scope', function($scope) {
             });
             
             finalizaDigitar();
-            
         }
     }
 
@@ -87,7 +91,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
         }
     }
 
-    $scope.painel = function(id) {
+    $scope.painel = function() {
         if ($scope.selectedPotPainel.id === 1) {
             $scope.potPainel = 335/1000;
             
@@ -128,7 +132,13 @@ app.controller('Calculadora', ['$scope', function($scope) {
     }
 
     $scope.apagar = function() {
+        $scope.valor();
+        $scope.painel();
+
+        $scope.cdInput = "cep";
+        $scope.mascara = "0000-000";
         $scope.inputCEP = "";
+
         $("#cidade").val("Cidade");
         $("#uf").val("Estado");
         $scope.energiaText = "";
@@ -138,14 +148,11 @@ app.controller('Calculadora', ['$scope', function($scope) {
         $scope.paineisText = "";
         $scope.paineis = ""; 
         $scope.areaText = "";
+
         $scope.area = "";
         $scope.inputValor = "";
-        $scope.cdInput = "cep";
-        $scope.mascara = "0";
         $scope.grupo = "Grupo";
         $scope.investimento = "";
-        $scope.selectedValor = "";
-        $scope.selectedPotPainel = "";
         $scope.cepInformado = false;
     }
 
@@ -159,7 +166,6 @@ app.controller('Calculadora', ['$scope', function($scope) {
     }
     
     calculoPotenciaPico = function() {
-        console.log("Variavel:" + $scope.irradiacaoSolar);
         $scope.potPico = $scope.energia/(30 * $scope.irradiacaoSolar * 0.80);
         console.log($scope.potPico);
     }
@@ -170,6 +176,11 @@ app.controller('Calculadora', ['$scope', function($scope) {
         if ($scope.paineis %  2 === 1) {
             $scope.paineis++;
         }
+
+        if ($scope.paineis === 0) {
+            $scope.paineis += 2;
+        }
+        
         console.log(painel);
         console.log($scope.paineis);
     }
@@ -228,18 +239,22 @@ app.controller('Calculadora', ['$scope', function($scope) {
         }
     }
 
-    //busca pelo CEP pelo site viaCEP
+    // * busca pelo CEP pelo site viaCEP
     //Quando o campo cep perde o foco.
     $("#cep").blur(function() {
         //Verifica se campo cep possui valor informado.
         if ($scope.inputCEP !== "") {
             //Expressão regular para validar o CEP.
             var validacep = /^[0-9]{8}$/;
+            $scope.cepInformado = true;
+            $scope.cdInput = "reais";
+            $scope.inputValor = "";
+            $scope.mascara = "R$";
 
             //Valida o formato do CEP.
             if(validacep.test($scope.inputCEP)) {
                 //Preenche os campos com "..." enquanto consulta webservice.
-                $scope.cepInformado = true;
+                // $scope.cepInformado = true;
                 $("#cidade").val("...");
                 $("#uf").val("...");
 
@@ -250,6 +265,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
                         //Atualiza os campos com os valores da consulta.                        
                         $("#cidade").val(dados.localidade);
                         $("#uf").val(dados.uf);
+                        
                         buscaIrradiacao(dados.localidade);
                     } else {
                         //CEP pesquisado não foi encontrado.
@@ -275,13 +291,11 @@ app.controller('Calculadora', ['$scope', function($scope) {
         }).done(function(dados) {
             //codigo que retira o acento e outros caracteres especiais
             var local = localidade.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-            console.log(local);
             var mes = monName[today.getMonth()];
 
             for (let index = 0; index < dados.length; index++) {
                 if (dados[index].name === local) {
                     $scope.irradiacaoSolar = dados[index][mes];
-                    console.log("Mes: " + mes + ' Irradiacao: ' + dados[index][mes]);
                 }
             }
         })
@@ -291,5 +305,14 @@ app.controller('Calculadora', ['$scope', function($scope) {
         });
     }
     
-
+    $(document).ready(function(){
+        var tam = $(window).width();
+      
+        if (tam <= 770){
+            $("#buttonCEP").removeClass("col-6");
+            $("#buttonCEP").addClass("col-12");
+            $("select").removeClass("col");
+            $("select").addClass("col-12");
+        }
+    });
 }]);
