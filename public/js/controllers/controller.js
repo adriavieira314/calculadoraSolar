@@ -180,7 +180,7 @@ app.controller('Calculadora', ['$scope', function($scope) {
         if ($scope.paineis === 0) {
             $scope.paineis += 2;
         }
-        
+
         console.log(painel);
         console.log($scope.paineis);
     }
@@ -250,6 +250,9 @@ app.controller('Calculadora', ['$scope', function($scope) {
             $scope.cdInput = "reais";
             $scope.inputValor = "";
             $scope.mascara = "R$";
+            setTimeout(function() {
+                $(".inputdigita").focus();
+            });
 
             //Valida o formato do CEP.
             if(validacep.test($scope.inputCEP)) {
