@@ -25,10 +25,12 @@ img {
     max-width: 36vw;
     /* height: 90vh; */
     margin: 0 auto;
-    border: 2px solid #111;
+    border: 1px solid #111;
     border-radius: 20px;
-    box-shadow: 10px 10px 8px #888888;
+    /* box-shadow: 10px 10px 8px #888888; */
+    box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
     background-color: #F5F5F5;
+    margin-bottom: 40px;
 }
 
 .container-fluid .inputdigita {
@@ -50,7 +52,7 @@ img {
 
 .container-fluid .div-input {
     background-color: #fff;
-    border: 2px solid #111;
+    border: 1px solid #111;
     margin: 30px 5px 0px 5px;
     border-radius: 20px;
 }
@@ -60,7 +62,7 @@ img {
 }
 
 .container-fluid .botoes {
-    border: 2px solid #111;
+    border: 1px solid #111;
     margin: 30px 5px;
     border-radius: 20px;
 }
