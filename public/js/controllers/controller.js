@@ -132,8 +132,9 @@ app.controller('Calculadora', ['$scope', function($scope) {
     }
 
     $scope.apagar = function() {
-        $scope.valor();
-        $scope.painel();
+        $scope.selectedValor = $scope.energiaOuValor[1].titulo;
+        $scope.selectedPotPainel = $scope.potenciaPainel[1].potencia;
+        $scope.selectedEstrutura = $scope.estruturas[0].nome;
 
         $scope.cdInput = "cep";
         $scope.mascara = "0000-000";
@@ -241,50 +242,53 @@ app.controller('Calculadora', ['$scope', function($scope) {
 
     // * busca pelo CEP pelo site viaCEP
     //Quando o campo cep perde o foco.
-    $("#cep").blur(function() {
-        //Verifica se campo cep possui valor informado.
-        if ($scope.inputCEP !== "") {
-            //Expressão regular para validar o CEP.
-            var validacep = /^[0-9]{8}$/;
-            $scope.cepInformado = true;
-            $scope.cdInput = "reais";
-            $scope.inputValor = "";
-            $scope.mascara = "R$";
-
-            //Valida o formato do CEP.
-            if(validacep.test($scope.inputCEP)) {
-                //Preenche os campos com "..." enquanto consulta webservice.
-                // $scope.cepInformado = true;
-                $("#cidade").val("...");
-                $("#uf").val("...");
-
-                //Consulta o webservice viacep.com.br/
-                $.getJSON("https://viacep.com.br/ws/"+ $scope.inputCEP +"/json/?callback=?", function(dados) {
-                }).done(function(dados) {
-                    if (!("erro" in dados)) {
-                        //Atualiza os campos com os valores da consulta.                        
-                        $("#cidade").val(dados.localidade);
-                        $("#uf").val(dados.uf);
-                        
-                        buscaIrradiacao(dados.localidade);
-                    } else {
-                        //CEP pesquisado não foi encontrado.
-                        $scope.cepInformado = false;
-                        alert("CEP não encontrado.");
-                        $("#cidade").val("Cidade");
-                        $("#uf").val("Estado");
-                    }
-                })
-                .fail(function(error) {
-                    console.log( "error" + error );
-                });
+    $scope.encontraCEP = function() {
+        // $("#cep").blur(function() {
+            //Verifica se campo cep possui valor informado.
+            if ($scope.inputCEP !== "") {
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+                $scope.cepInformado = true;
+                $scope.cdInput = "reais";
+                $scope.inputValor = "";
+                $scope.mascara = "R$";
+    
+                //Valida o formato do CEP.
+                if(validacep.test($scope.inputCEP)) {
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    // $scope.cepInformado = true;
+                    $("#cidade").val("...");
+                    $("#uf").val("...");
+    
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/"+ $scope.inputCEP +"/json/?callback=?", function(dados) {
+                    }).done(function(dados) {
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.                        
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                            
+                            buscaIrradiacao(dados.localidade);
+                        } else {
+                            //CEP pesquisado não foi encontrado.
+                            $scope.cepInformado = false;
+                            alert("CEP não encontrado.");
+                            $("#cidade").val("Cidade");
+                            $("#uf").val("Estado");
+                        }
+                    })
+                    .fail(function(error) {
+                        console.log( "error" + error );
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    alert("Formato de CEP inválido.");
+                }
             } //end if.
-            else {
-                //cep é inválido.
-                alert("Formato de CEP inválido.");
-            }
-        } //end if.
-    });
+        // });
+    }
+    
 
     buscaIrradiacao = function(localidade) {
         $.getJSON("../../assets/json/dadosIrradiacao.json", function(dados) {
