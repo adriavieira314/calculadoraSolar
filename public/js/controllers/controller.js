@@ -250,9 +250,6 @@ app.controller('Calculadora', ['$scope', function($scope) {
             $scope.cdInput = "reais";
             $scope.inputValor = "";
             $scope.mascara = "R$";
-            setTimeout(function() {
-                $(".inputdigita").focus();
-            });
 
             //Valida o formato do CEP.
             if(validacep.test($scope.inputCEP)) {
@@ -312,10 +309,8 @@ app.controller('Calculadora', ['$scope', function($scope) {
         var tam = $(window).width();
       
         if (tam <= 770){
-            $("#buttonCEP").removeClass("col-6");
-            $("#buttonCEP").addClass("col-12");
-            $("select").removeClass("col");
-            $("select").addClass("col-12");
+            $("#btn-apagar").removeClass("col");
+            $("#btn-apagar").addClass("col-3");
         }
     });
 }]);
