@@ -29,7 +29,7 @@
             <h6 class="heading-input" ng-if="cdInput === 'cep'">Informe seu CEP:</h6>
             <h6 class="heading-input" ng-if="cdInput === 'grupo'">Estimativa de Investimento:</h6>
             <div class="row">
-                <input id="cep" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ui-br-cep-mask>
+                <input id="cep" class="col inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'cep'" ng-model="inputCEP" ng-blur="encontraCEP()" ui-br-cep-mask>
                 <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
                 <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
                 <input class="col inputdigita" placeholder="{{investimento}}" ng-show="cdInput === 'grupo'">
