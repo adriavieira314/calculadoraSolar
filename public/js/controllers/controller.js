@@ -49,45 +49,18 @@ app.controller('Calculadora', ['$scope', function($scope) {
             $scope.mascara = "Consumo (kWh)";
             $scope.inputValor = "";
             
-            setTimeout(function() {
-                $(".inputdigita").focus();
-            });
-
-            finalizaDigitar();
+            // setTimeout(function() {
+            //     $(".inputdigita").focus();
+            // });
 
         } else {
             $scope.cdInput = "reais";
             $scope.inputValor = "";
             $scope.mascara = "R$";
 
-            setTimeout(function() {
-                $(".inputdigita").focus();
-            });
-            
-            finalizaDigitar();
-        }
-    }
-
-    finalizaDigitar = function() {
-        //verifica quando o usuario terminar de digitar e ativa os outros selects depois de 1 segundo
-        var typingTimer;                
-        var doneTypingInterval = 1000;
-        var $input = $('.valorInput');
-
-        //quando keyup, comeca a contagem
-        $input.on('keyup', function () {
-            clearTimeout(typingTimer);
-            typingTimer = setTimeout(doneTyping, doneTypingInterval);
-        });
-
-        //quando keydown, limpa a contagem 
-        $input.on('keydown', function () {
-            clearTimeout(typingTimer);
-        });
-
-        //usuario "terminou de digitar" faça algo
-        doneTyping = function() {
-            $scope.valorInformado = true;
+            // setTimeout(function() {
+            //     $(".inputdigita").focus();
+            // });
         }
     }
 

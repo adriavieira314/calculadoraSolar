@@ -17,8 +17,9 @@ img {
 }
 
 #marca-calc {
-    width: 13vw;
-    height: 5vh;
+    margin-top: 10px;
+    width: 13em;
+    height: 2.5em;
 }
 
 .container-fluid {
@@ -53,7 +54,7 @@ img {
 .container-fluid .div-input {
     background-color: #fff;
     border: 1px solid #111;
-    margin: 30px 5px 0px 5px;
+    margin: 10px 5px 0px 5px;
     border-radius: 20px;
 }
 
@@ -92,6 +93,8 @@ img {
 .container-fluid select {
     color: #f6f6f6;
     font-weight: 500;
+    text-align: center; /* para firefox */
+    text-align-last: center; /* para chrome */
 }
 
 .botoes {
@@ -121,7 +124,7 @@ img {
 .container-fluid .btn-selecionar {
     box-shadow: 0 5px 0 #9b9898;
     background-color: #B5B5B5;
-    margin: 15px 0px;
+    margin: 15px 5px;
 }
 
 #btn-apagar {
@@ -138,6 +141,11 @@ img {
     img {
         width: 30vw;
         height: 30vh;
+    }
+
+    #marca-calc {
+        width: 10em;
+        height: 2em;
     }
 }
 
