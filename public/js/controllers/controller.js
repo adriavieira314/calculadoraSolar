@@ -290,4 +290,24 @@ app.controller('Calculadora', ['$scope', function($scope) {
             $("#btn-apagar").addClass("col-3");
         }
     });
+
+    //teste
+    const url = "https://webservice.aldo.com.br/asp.net/ferramentas/integracao.ashx?u=79443&p=xt3cc0/"
+
+    $http({
+        url: url,
+        method: "GET",
+        // headers: {
+        //     'rejectUnauthorized': 'true', 
+        //     'Access-Control-Allow-Origin': '*',
+        //     'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT',
+        //     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
+        // }
+    }).success(function (xml) {
+        console.log(xml);
+        // console.log(typeof xml);
+    }).error(function (erro) {
+        console.log(erro);
+        console.log('error in /writexmlfiletest ');                                         
+    });
 }]);
