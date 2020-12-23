@@ -44,7 +44,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
             categoria: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL K2 SYSTEMS',
             marca: 'ALDO SOLAR ON GRID',
             descricao: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL K2 SYSTEMS GROWATT GEF 1,23KWP TRINA MONO PERC HALF CELL 410W MIC 1KW 1MPPT MONO 220V',
-            precoeup: "6.299,00"
+            precoeup: "7.969,00"
         },
     ];
     
