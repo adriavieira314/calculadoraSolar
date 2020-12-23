@@ -19,8 +19,9 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     $scope.carregando = true;
     var caminhoXML = "../../assets/xml/79443.xml";
     var preco = [];
-    $scope.topTres = [];
+    // $scope.topTres = [];
     $scope.precoKit = 0;
+    $scope.unico = false;
     $scope.topTres = [
         {
             codigo:  '82216-3',
@@ -47,7 +48,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
             precoeup: "7.969,00"
         },
     ];
-    
 
     // listas para os selects
     $scope.energiaOuValor = [
@@ -137,9 +137,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         calculoPotenciaPico();
         calculoQtdPaineis();
         calculoArea();
-        // valorInvestimento();
-        // grupo();
-        
+
         $scope.carregando = true;
         $scope.cdInput = "carregando";
         pronto();
@@ -304,6 +302,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                 })
                 .fail(function(error) {
                     console.log( "error" + error );
+                    alert('Erro ao buscar CEP')
                 });
             } //end if.
             else {
@@ -338,10 +337,16 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         var tam = $(window).width();
       
         if (tam <= 770){
+            $scope.$apply(function(){
+                $scope.unico = true;
+            });
+
             $("#btn-apagar").removeClass("col");
             $("#btn-apagar").addClass("col-3");
         }
     });
+
+    
 
     //* Codigo pegando dados do arquivo xml
     getXML = function() {

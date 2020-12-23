@@ -72,9 +72,9 @@ img {
 #cidade {
     color: #f6f6f6;
     font-weight: 500;
-    overflow: auto;
+    /* overflow: auto;
     white-space: normal;
-    word-wrap: break-word;
+    word-wrap: break-word; */
 }
 
 #resultado {
