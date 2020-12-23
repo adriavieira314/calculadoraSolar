@@ -133,6 +133,57 @@ img {
     background-color: #F08080;
 }
 
+#containerKits {
+    background-color: #040D29;
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
+
+.card {
+    background-color: #fff;
+    margin: 0 30px;
+    transition: .3s transform cubic-bezier(.155,1.105,.295,1.12),.3s box-shadow,.3s -webkit-transform cubic-bezier(.155,1.105,.295,1.12);
+}
+
+.cards {
+    color: #337ab7;
+    padding-left: 5px;
+}
+
+.card-img-top {
+    height: auto;
+}
+
+#codigo {
+    font-size: 13px;
+    padding-top: 5px;
+}
+
+#categoria {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 18px;
+    text-align: left;
+}
+
+#descricao {
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+
+#preco {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
 @media only screen and (max-width: 1200px) {
     .container-fluid {
         max-width: 50vw;
@@ -163,6 +214,10 @@ img {
     .container-fluid .inputdigita {
         font-size: 3em;
     }
+
+    .card {
+        margin: 0 10px;
+    }
 }
 
 @media only screen and (max-width: 770px) {
@@ -180,6 +235,22 @@ img {
     }
 }
 
+@media only screen and (max-width: 650px) {
+    .container-fluid {
+        max-width: 70vw;
+    }
+
+    #containerKits {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        margin: 10px 0;
+        width: 70vw !important;
+    }
+}
+
 @media only screen and (max-width: 500px) {
     .container-fluid {
         max-width: 90vw;
@@ -188,5 +259,15 @@ img {
     img {
         width: 50vw;
         height: 50vh;
+    }
+
+    #containerKits {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .card {
+        margin: 10px 0;
+        width: 90vw !important;
     }
 }
