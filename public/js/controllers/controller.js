@@ -335,7 +335,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     
     //Para dispostivos moveis
     $(document).ready(function(){
-        $("selects").find("option").eq(0).remove();
+        $(".selects").find("option").eq(0).remove();
         var tam = $(window).width();
       
         if (tam <= 770){
