@@ -213,7 +213,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     }
 
     grupo = function() {
-        if ($scope.potPico >= 104) {
+        if ($scope.potPico < 104) {
             $('#modalGrupoA').modal('show');
             texto = "Sugerimos que você seja cliente do Grupo A, entre em contato com a engenharia.";
             $(".modal-body").html("");
