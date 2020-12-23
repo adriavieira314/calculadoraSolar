@@ -19,35 +19,9 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     $scope.carregando = true;
     var caminhoXML = "../../assets/xml/79443.xml";
     var preco = [];
-    // $scope.topTres = [];
+    $scope.topTres = [];
     $scope.precoKit = 0;
     $scope.unico = false;
-    $scope.topTres = [
-        {
-            codigo:  '82216-3',
-            foto: 'https://www.aldo.com.br/OldSite/images/080737_151020140509.jpg',
-            categoria: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA PERFIL 55CM ROMAGNOLE',
-            marca: 'ALDO SOLAR ON GRID',
-            descricao: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA PERFIL 55CM ROMAGNOLE GROWATT GEF 1,23KWP TRINA MONO PERC HALF CELL 410W MIC 1KW 1MPPT MONO 220V',
-            precoeup: "6.299,00"
-        },
-        {
-            codigo:  '83778-0',
-            foto: 'https://www.aldo.com.br/OldSite/images/080737_151020140509.jpg',
-            categoria: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL ROMAGNOLE',
-            marca: 'ALDO SOLAR ON GRID',
-            descricao: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL ROMAGNOLE GROWATT GEF 1,23KWP TRINA MONO PERC HALF CELL 410W MIC 1KW 1MPPT MONO 220V',
-            precoeup: "6.369,00"
-        },
-        {
-            codigo:  '85279-6',
-            foto: 'https://www.aldo.com.br/OldSite/images/080737_151020140509.jpg',
-            categoria: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL K2 SYSTEMS',
-            marca: 'ALDO SOLAR ON GRID',
-            descricao: 'GERADOR DE ENERGIA SOLAR GROWATT METALICA TRAPEZOIDAL K2 SYSTEMS GROWATT GEF 1,23KWP TRINA MONO PERC HALF CELL 410W MIC 1KW 1MPPT MONO 220V',
-            precoeup: "7.969,00"
-        },
-    ];
 
     // listas para os selects
     $scope.energiaOuValor = [
@@ -140,13 +114,12 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
         $scope.carregando = true;
         $scope.cdInput = "carregando";
-        arrayPronto();
         
         $scope.energiaText = $scope.energia;
         $scope.potPicoText = $scope.potPico;
         $scope.paineisText = $scope.paineis; 
         $scope.areaText = $scope.area;
-        // getXML();
+        tipoGrupo();
     }
 
     $scope.apagar = function() {
@@ -220,9 +193,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 			$(".modal-body").append('<p style="margin-left: 20px; font-size: 15px; font-weight: bold;">' + texto + '</p>');
             $scope.grupo = "Grupo A";
         } else {
-            $scope.cdInput = "grupo";
-            $scope.grupo = "Grupo B";
-            valorInvestimento();
+            getXML();
         }
     }
 
@@ -271,15 +242,15 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         if ($scope.inputCEP !== "") {
             //Expressão regular para validar o CEP.
             var validacep = /^[0-9]{8}$/;
-            $scope.cepInformado = true;
-            $scope.cdInput = "reais";
-            $scope.inputValor = "";
-            $scope.mascara = "R$";
-
+            
             //Valida o formato do CEP.
             if(validacep.test($scope.inputCEP)) {
                 //Preenche os campos com "..." enquanto consulta webservice.
-                // $scope.cepInformado = true;
+                $scope.cepInformado = true;
+                $scope.cdInput = "reais";
+                $scope.inputValor = "";
+                $scope.mascara = "R$";
+
                 $("#cidade").val("...");
                 $("#uf").val("...");
 
@@ -423,7 +394,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                                     $scope.$apply(function(){
                                         $scope.carregando = false;
                                         arrayPronto();
-                                        console.log($scope.topTres);
+                                        // console.log($scope.topTres);
                                     });
                                 }, 800);
                             }
@@ -454,14 +425,13 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         $scope.carregando = false;
         $scope.cdInput = "grupo";
         $scope.precoKit = parseFloat($scope.topTres[0].precoeup);
-        tipoGrupo();
-        
+        valorInvestimento();
     }
 
     $scope.precoGerador = function(preco) {
         $('html, body').animate({scrollTop: $("#marca-calc").offset().top}, 500);
         $scope.precoKit = parseFloat(preco);
-        tipoGrupo();
+        valorInvestimento();
     }
 }]);
  
