@@ -106,24 +106,22 @@
                 <button id="resultado" class="select-button btn btn-selecionar col calc-button" ng-disabled="!inputValor" ng-click="resultado()">&equals;</button>
             </div>
         </div>
+    </div>
 
-        <!-- Cards Produtos -->
-        <div ng-show="!carregando" id="containerKits" class="row">
-            <div class="card col" ng-repeat="top in topTres" ng-click="precoGerador(top.precoeup)">
-                <img src="{{top.foto}}" class="card-img-top img-responsive" alt="Imagem do Produto">
-                <div class="card-body">
-                    <p class="cards" id="codigo">Código: {{top.codigo}}</p>
-                    <p class="cards" id="categoria">
-                        {{top.categoria}} {{top.marca}} ({{top.codigo}})
-                    </p>
-                    <p class="cards" id="descricao">{{top.descricao}}</p>
-                    <span class="cards" id="preco">R$ {{top.precoeup}}</span>
-                </div>
+    <!-- Cards Produtos -->
+    <div ng-show="!carregando" id="containerKits">
+        <div class="card" ng-repeat="top in topTres" ng-click="precoGerador(top.precoeup)">
+            <img src="{{top.foto}}" class="card-img-top img-responsive" alt="Imagem do Produto">
+            <div class="card-body">
+                <p class="cards" id="codigo">Código: {{top.codigo}}</p>
+                <p class="cards" id="categoria">
+                    {{top.categoria}} {{top.marca}} ({{top.codigo}})
+                </p>
+                <p class="cards" id="descricao">{{top.descricao}}</p>
+                <span class="cards" id="preco">R$ {{top.precoeup}}</span>
             </div>
         </div>
     </div>
-
-    
         
     <!-- Modal -->
     <div class="modal fade" id="modalGrupoA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
