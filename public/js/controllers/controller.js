@@ -213,7 +213,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     }
 
     tipoGrupo = function() {
-        if ($scope.potPico < 104) {
+        if ($scope.potPico >= 104) {
             $('#modalGrupoA').modal('show');
             texto = "Sugerimos que você seja cliente do Grupo A, entre em contato com a engenharia.<br>Contato: 3622-3917";
             $(".modal-body").html("");
@@ -335,6 +335,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     
     //Para dispostivos moveis
     $(document).ready(function(){
+        $('select > option:first').hide();
         var tam = $(window).width();
       
         if (tam <= 770){
