@@ -65,19 +65,19 @@
             <!--  -->
     
             <div class="row">
-                <select id="valor" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedValor = energiaOuValor[1].titulo" ng-model="selectedValor" ng-options="valor.titulo for valor in energiaOuValor" ng-change="valor()">
+                <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedValor = energiaOuValor[1].titulo" ng-model="selectedValor" ng-options="valor.titulo for valor in energiaOuValor" ng-change="valor()">
                     <option value="" disabled hidden>{{selectedValor}}</option>
                 </select> 
             </div>
 
             <div class="row">    
-                <select id="painel" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
+                <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
                     <option value="" disabled hidden>{{selectedPotPainel}}</option>
                 </select>
             </div>
 
             <div class="row">
-                <select id="estrutura" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedEstrutura = estruturas[0].nome" ng-model="selectedEstrutura" ng-options="estrutura.nome for estrutura in estruturas" ng-change="estrutura()">
+                <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedEstrutura = estruturas[0].nome" ng-model="selectedEstrutura" ng-options="estrutura.nome for estrutura in estruturas" ng-change="estrutura()">
                     <option value="" disabled hidden>{{selectedEstrutura}}</option>
                 </select>
             </div>
