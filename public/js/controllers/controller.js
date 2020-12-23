@@ -140,7 +140,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
         $scope.carregando = true;
         $scope.cdInput = "carregando";
-        pronto();
+        arrayPronto();
         
         $scope.energiaText = $scope.energia;
         $scope.potPicoText = $scope.potPico;
@@ -212,7 +212,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         $scope.area = 2.03 * $scope.paineis;
     }
 
-    grupo = function() {
+    tipoGrupo = function() {
         if ($scope.potPico < 104) {
             $('#modalGrupoA').modal('show');
             texto = "Sugerimos que você seja cliente do Grupo A, entre em contato com a engenharia.<br>Contato: 3622-3917";
@@ -222,6 +222,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         } else {
             $scope.cdInput = "grupo";
             $scope.grupo = "Grupo B";
+            valorInvestimento();
         }
     }
 
@@ -421,7 +422,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                                     $scope.topTres = $scope.topTres.sort(compare);
                                     $scope.$apply(function(){
                                         $scope.carregando = false;
-                                        pronto();
+                                        arrayPronto();
                                         console.log($scope.topTres);
                                     });
                                 }, 800);
@@ -449,19 +450,18 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         return 0;
     }
 
-    pronto = function() {
+    arrayPronto = function() {
         $scope.carregando = false;
         $scope.cdInput = "grupo";
         $scope.precoKit = parseFloat($scope.topTres[0].precoeup);
-        grupo();
-        valorInvestimento();
+        tipoGrupo();
+        
     }
 
     $scope.precoGerador = function(preco) {
         $('html, body').animate({scrollTop: $("#marca-calc").offset().top}, 500);
         $scope.precoKit = parseFloat(preco);
-        grupo();
-        valorInvestimento();
+        tipoGrupo();
     }
 }]);
  
