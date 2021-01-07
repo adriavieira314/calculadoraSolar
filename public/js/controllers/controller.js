@@ -210,7 +210,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         $scope.carregando = true;
         $scope.precoKit = 0;
 
-        $scope.selectedValor = $scope.energiaOuValor[1].titulo;
+        // $scope.selectedValor = $scope.energiaOuValor[1].titulo;
         $scope.selectedPotPainel = $scope.potenciaPainel[1].potencia;
         $scope.selectedEstrutura = $scope.estruturas[0].nome;
         valorPainel = $scope.selectedPotPainel;
@@ -292,7 +292,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         dataType: "text",
         success: function(csv) {
             var lines = csv.split("\n");
-            console.log(lines);
       
             for(let i = 0; i < lines.length; i++){
                 lines[i] = lines[i].replace(/\s/,'')//delete all blanks
