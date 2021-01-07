@@ -68,8 +68,7 @@ img {
     border-radius: 20px;
 }
 
-#uf,
-#cidade {
+#local {
     color: #f6f6f6;
     font-weight: 500;
     /* overflow: auto;
@@ -88,6 +87,7 @@ img {
 
 .btn {
     height: 40px;
+    border-radius: 35px !important;
 }
 
 .container-fluid select {
@@ -128,7 +128,7 @@ img {
 }
 
 #btn-apagar {
-    border-radius: 50%;
+    border-radius: 50% !important;
     box-shadow: 0 5px 0 #db7070;
     background-color: #F08080;
 }
