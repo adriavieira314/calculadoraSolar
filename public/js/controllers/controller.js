@@ -286,7 +286,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     
     // funcao converte o arquivo csv em JSON
     var result = [];
-    var url = "../../assets/irradiacaoSolar.csv"
+    var url = "/public/assets/irradiacaoSolar.csv";
     $.ajax({
         type: "GET",
         url: url,
