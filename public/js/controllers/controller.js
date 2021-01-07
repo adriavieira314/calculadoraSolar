@@ -286,12 +286,12 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     
     // funcao converte o arquivo csv em JSON
     var result = [];
-    var url = "/public/assets/irradiacaoSolar.csv";
     $.ajax({
         type: "GET",
-        url: url,
+        url: "../../assets/irradiacaoSolar.csv",
         dataType: "text",
         success: function(csv) {
+            console.log(csv);
             var lines = csv.split("\r");
       
             for(let i = 0; i < lines.length; i++){
@@ -313,7 +313,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
           
             // return result; //JavaScript object
             // return JSON.stringify(result); //JSON
-            console.log(result);
+            // console.log(result);
         }
     })
 
