@@ -291,8 +291,8 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         url: "../../assets/irradiacaoSolar.csv",
         dataType: "text",
         success: function(csv) {
-            console.log(csv);
             var lines = csv.split("\r");
+            console.log(lines);
       
             for(let i = 0; i < lines.length; i++){
                 lines[i] = lines[i].replace(/\s/,'')//delete all blanks
