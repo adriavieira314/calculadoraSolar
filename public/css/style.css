@@ -30,7 +30,7 @@ img {
     border-radius: 20px;
     /* box-shadow: 10px 10px 8px #888888; */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #E8E8E8;
+    background-color: #DCDCDC;
     margin-bottom: 40px;
 }
 
@@ -59,7 +59,7 @@ img {
 
 
 .container-fluid .div-input {
-    background-color: #E8E8E8;
+    background-color: #DCDCDC;
     border: 2px solid #fff;
     margin: 10px 5px 0px 5px;
     border-radius: 20px;
@@ -105,7 +105,7 @@ img {
 }
 
 .botoes {
-    background-color: #E8E8E8;
+    background-color: #DCDCDC;
     padding: 20px;
 }
 
