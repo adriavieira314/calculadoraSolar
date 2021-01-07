@@ -25,11 +25,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     $scope.selectedValor = "reais";
 
     // listas para os selects
-    $scope.energiaOuValor = [
-        {id: 1, titulo: "Consumo(kWh)"},
-        {id: 2, titulo: "Valor em Reais"}
-    ]
-
     $scope.potenciaPainel = [
         {id: 1, potencia: "335W"},
         {id: 2, potencia: "410W"},
@@ -180,7 +175,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
         }
         if ($scope.potPico >= 46 && $scope.potPico < 57) {
-            console.log($scope.precoKit);
             number = 3.500 + 14.670 + $scope.precoKit;
             $scope.investimento = parseFloat(number.toFixed(3));
 
@@ -226,8 +220,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         $scope.mascara = "0000-000";
         $scope.inputCEP = "";
 
-        $("#cidade").val("Cidade");
-        $("#uf").val("Estado");
         $("#local").val("UF");
         $scope.energiaText = "";
         $scope.energia = "";
@@ -259,9 +251,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                 $scope.cdInput = "reais";
                 $scope.inputValor = "";
                 $scope.mascara = "R$";
-
-                $("#cidade").val("...");
-                $("#uf").val("...");
+                
                 $("#local").val("...");
 
                 //Consulta o webservice viacep.com.br/
@@ -269,8 +259,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                 }).done(function(dados) {
                     if (!("erro" in dados)) {
                         //Atualiza os campos com os valores da consulta.                        
-                        $("#cidade").val(dados.localidade);
-                        $("#uf").val(dados.uf);
                         $("#local").val(dados.uf + ' - ' + dados.localidade);
                         
                         buscaIrradiacao(dados.localidade);
@@ -323,7 +311,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
           
             // return result; //JavaScript object
             // return JSON.stringify(result); //JSON
-            // console.log(result);
+            console.log('passei');
         }
     })
 
