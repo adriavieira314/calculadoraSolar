@@ -26,16 +26,18 @@
     <div class="container-fluid">
         <img id="marca-calc" src="assets/logo.png" class="img-fluid" alt="Logo da Empresa">
         <div class="div-input" id="div-input">
-            <h6 class="heading-input" ng-if="cdInput === 'kwh'">Informe o valor do Consumo da energia:</h6>
-            <h6 class="heading-input" ng-if="cdInput === 'reais'">Informe o valor da sua conta de luz:</h6>
-            <h6 class="heading-input" ng-if="cdInput === 'cep'">Informe seu CEP:</h6>
-            <h6 class="heading-input" ng-if="cdInput === 'grupo' || cdInput === 'carregando'">Estimativa de Investimento:</h6>
-            <div class="row">
-                <input class="col inputdigita" placeholder="{{mascara}}" autocomplete="off" ng-show="cdInput === 'cep'" ng-model="inputCEP" ng-blur="encontraCEP()" ui-br-cep-mask>
-                <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
-                <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
-                <input class="col inputdigita" placeholder="Aguarde..." ng-show="cdInput === 'carregando'" readonly>
-                <input class="col inputdigita" placeholder="R${{investimento}}" ng-show="cdInput === 'grupo'" readonly>
+            <div id="tela">
+                <h6 class="heading-input" ng-if="cdInput === 'kwh'">Informe o valor do Consumo da energia:</h6>
+                <h6 class="heading-input" ng-if="cdInput === 'reais'">Informe o valor da sua conta de luz:</h6>
+                <h6 class="heading-input" ng-if="cdInput === 'cep'">Informe seu CEP:</h6>
+                <h6 class="heading-input" ng-if="cdInput === 'grupo' || cdInput === 'carregando'">Estimativa de Investimento:</h6>
+                <div class="row">
+                    <input class="col inputdigita" placeholder="{{mascara}}" autocomplete="off" ng-show="cdInput === 'cep'" ng-model="inputCEP" ng-blur="encontraCEP()" ui-br-cep-mask>
+                    <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'kwh'" ng-model="inputValor">
+                    <input class="col valorInput inputdigita" placeholder="{{mascara}}" ng-show="cdInput === 'reais'" ng-model="inputValor" ui-money-mask>
+                    <input class="col inputdigita" placeholder="Aguarde..." ng-show="cdInput === 'carregando'" readonly>
+                    <input class="col inputdigita" placeholder="R${{investimento}}" ng-show="cdInput === 'grupo'" readonly>
+                </div>
             </div>
         </div>
         
