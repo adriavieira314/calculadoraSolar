@@ -115,6 +115,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     
     calculoPotenciaPico = function() {
         $scope.potPico = $scope.energia/(30 * $scope.irradiacaoSolar * 0.80);
+        console.log($scope.irradiacaoSolar);
         console.log('$scope.potPico ' + $scope.potPico);
     }
 
@@ -311,7 +312,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
           
             // return result; //JavaScript object
             // return JSON.stringify(result); //JSON
-            console.log('passei');
+            console.log(result);
         }
     })
 
