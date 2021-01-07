@@ -22,10 +22,11 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     $scope.topTres = [];
     $scope.precoKit = 0;
     $scope.unico = false;
+    $scope.selectedValor = "reais";
 
     // listas para os selects
     $scope.energiaOuValor = [
-        {id: 1, titulo: "Consumo (kWh)"},
+        {id: 1, titulo: "Consumo(kWh)"},
         {id: 2, titulo: "Valor em Reais"}
     ]
 
@@ -49,13 +50,15 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     }
 
     // funcoes para quando o select mudar
-    $scope.valor = function() {
-        if ($scope.selectedValor.id === 1) {
+    $scope.valor = function(id) {
+        if (id === "consumo") {
+            $scope.selectedValor = "consumo";
             $scope.cdInput = "kwh";
-            $scope.mascara = "Consumo (kWh)";
+            $scope.mascara = "Consumo(kWh)";
             $scope.inputValor = "";
 
         } else {
+            $scope.selectedValor = "reais";
             $scope.cdInput = "reais";
             $scope.inputValor = "";
             $scope.mascara = "R$";
@@ -104,74 +107,27 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         }
     }
     //fim
-    
 
-    $scope.resultado = function() {
-        calculoEnergia($scope.selectedValor.id);
-        calculoPotenciaPico();
-        calculoQtdPaineis();
-        calculoArea();
-
-        $scope.carregando = true;
-        $scope.cdInput = "carregando";
-        
-        $scope.energiaText = $scope.energia;
-        $scope.potPicoText = $scope.potPico;
-        $scope.paineisText = $scope.paineis; 
-        $scope.areaText = $scope.area;
-        tipoGrupo();
-    }
-
-    $scope.apagar = function() {
-        $scope.topTres = [];
-        preco = [];
-        $scope.carregando = true;
-        $scope.precoKit = 0;
-
-        $scope.selectedValor = $scope.energiaOuValor[1].titulo;
-        $scope.selectedPotPainel = $scope.potenciaPainel[1].potencia;
-        $scope.selectedEstrutura = $scope.estruturas[0].nome;
-        valorPainel = $scope.selectedPotPainel;
-        pegaEstrutura = $scope.selectedEstrutura;
-        valorEstrutura = pegaEstrutura.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toUpperCase();
-
-        $scope.cdInput = "cep";
-        $scope.mascara = "0000-000";
-        $scope.inputCEP = "";
-
-        $("#cidade").val("Cidade");
-        $("#uf").val("Estado");
-        $scope.energiaText = "";
-        $scope.energia = "";
-        $scope.potPicoText = "";
-        $scope.potPico = "";
-        $scope.paineisText = "";
-        $scope.paineis = ""; 
-        $scope.areaText = "";
-
-        $scope.area = "";
-        $scope.inputValor = "";
-        $scope.grupo = "Grupo";
-        $scope.investimento = "";
-        $scope.cepInformado = false;
-    }
-
-    calculoEnergia = function(id) {
-        if ($scope.selectedValor.id === 1) {
+    calculoEnergia = function() {
+        if ($scope.selectedValor === "consumo") {
             $scope.energia = $scope.inputValor;
         } else {
             var energia = $scope.inputValor/0.92;
             $scope.energia = Math.floor(energia);
+            console.log('$scope.energia ' + $scope.energia);
         }
     }
     
     calculoPotenciaPico = function() {
         $scope.potPico = $scope.energia/(30 * $scope.irradiacaoSolar * 0.80);
+        console.log('$scope.potPico ' + $scope.potPico);
     }
 
     calculoQtdPaineis = function() {
+        console.log('$scope.potPainel ' + $scope.potPainel);
         var painel = $scope.potPico/$scope.potPainel;
         $scope.paineis = Math.floor(painel);
+        console.log('$scope.potPico ' + $scope.potPico);
         if ($scope.paineis %  2 === 1) {
             $scope.paineis++;
         }
@@ -183,6 +139,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
     calculoArea = function() {
         $scope.area = 2.03 * $scope.paineis;
+        console.log('$scope.area ' + $scope.area);
     }
 
     tipoGrupo = function() {
@@ -193,7 +150,10 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 			$(".modal-body").append('<p style="margin-left: 20px; font-size: 15px; font-weight: bold;">' + texto + '</p>');
             $scope.grupo = "Grupo A";
         } else {
-            getXML();
+            $scope.carregando = true;
+            $scope.cdInput = "carregando";
+            $scope.grupo = "Grupo B";
+            // getXML();
         }
     }
 
@@ -220,6 +180,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
         }
         if ($scope.potPico >= 46 && $scope.potPico < 57) {
+            console.log($scope.precoKit);
             number = 3.500 + 14.670 + $scope.precoKit;
             $scope.investimento = parseFloat(number.toFixed(3));
 
@@ -233,6 +194,54 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
             number = 4.500 + 23.588 + $scope.precoKit;
             $scope.investimento = parseFloat(number.toFixed(3));
         }
+    }
+
+    $scope.resultado = function() {
+        calculoEnergia();
+        calculoPotenciaPico();
+        calculoQtdPaineis();
+        calculoArea();
+
+        $scope.energiaText = $scope.energia;
+        $scope.potPicoText = $scope.potPico;
+        $scope.paineisText = $scope.paineis; 
+        $scope.areaText = $scope.area;
+        tipoGrupo();
+    }
+
+    $scope.apagar = function() {
+        $scope.topTres = [];
+        preco = [];
+        $scope.carregando = true;
+        $scope.precoKit = 0;
+
+        $scope.selectedValor = $scope.energiaOuValor[1].titulo;
+        $scope.selectedPotPainel = $scope.potenciaPainel[1].potencia;
+        $scope.selectedEstrutura = $scope.estruturas[0].nome;
+        valorPainel = $scope.selectedPotPainel;
+        pegaEstrutura = $scope.selectedEstrutura;
+        valorEstrutura = pegaEstrutura.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toUpperCase();
+
+        $scope.cdInput = "cep";
+        $scope.mascara = "0000-000";
+        $scope.inputCEP = "";
+
+        $("#cidade").val("Cidade");
+        $("#uf").val("Estado");
+        $("#local").val("UF");
+        $scope.energiaText = "";
+        $scope.energia = "";
+        $scope.potPicoText = "";
+        $scope.potPico = "";
+        $scope.paineisText = "";
+        $scope.paineis = ""; 
+        $scope.areaText = "";
+
+        $scope.area = "";
+        $scope.inputValor = "";
+        $scope.grupo = "Grupo";
+        $scope.investimento = "";
+        $scope.cepInformado = false;
     }
 
     // * busca pelo CEP pelo site viaCEP
@@ -253,6 +262,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
                 $("#cidade").val("...");
                 $("#uf").val("...");
+                $("#local").val("...");
 
                 //Consulta o webservice viacep.com.br/
                 $.getJSON("https://viacep.com.br/ws/"+ $scope.inputCEP +"/json/?callback=?", function(dados) {
@@ -261,6 +271,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                         //Atualiza os campos com os valores da consulta.                        
                         $("#cidade").val(dados.localidade);
                         $("#uf").val(dados.uf);
+                        $("#local").val(dados.uf + ' - ' + dados.localidade);
                         
                         buscaIrradiacao(dados.localidade);
                     } else {
@@ -284,42 +295,61 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         } //end if.
     }
     
+    // funcao converte o arquivo csv em JSON
+    var result = [];
+    $.ajax({
+        type: "GET",
+        url: "../../assets/irradiacaoSolar.csv",
+        dataType: "text",
+        success: function(csv) {
+            var lines = csv.split("\r");
+      
+            for(let i = 0; i < lines.length; i++){
+                lines[i] = lines[i].replace(/\s/,'')//delete all blanks
+            }
+      
+            var headers = lines[0].split(";");
+        
+            for(var i = 1; i < lines.length; i++){
+                var obj = {};
+                var currentline = lines[i].split(";");
+        
+                for(var j = 0; j < headers.length; j++){
+                    obj[headers[j]] = currentline[j];
+                }
+        
+                result.push(obj);
+            }
+          
+            // return result; //JavaScript object
+            // return JSON.stringify(result); //JSON
+            // console.log(result);
+        }
+    })
 
     buscaIrradiacao = function(localidade) {
-        $.getJSON("../../assets/json/dadosIrradiacao.json", function(dados) {
-        }).done(function(dados) {
-            //codigo que retira o acento e outros caracteres especiais
-            var local = localidade.normalize("NFD").replace(/[\u0300-\u036f]/g, '');
-            var mes = monName[today.getMonth()];
+        //pegando o mes em que o usuario entrou
+        var mes = monName[today.getMonth()];
 
-            for (let index = 0; index < dados.length; index++) {
-                if (dados[index].name === local) {
-                    $scope.irradiacaoSolar = dados[index][mes];
+        for (let index = 0; index < result.length; index++) {
+            if (result[index].NAME === localidade) {
+                //pegando a irradiacao solar do mes
+                var valorIrradiacao = result[index][mes];
+                //convertendo para numero
+                var stringParaNumero = parseFloat(valorIrradiacao);
+                //formatando em real
+                function formatarValor(valor) {
+                    return valor.toLocaleString('pt-BR');
                 }
+
+                var valorFormatado = parseFloat(formatarValor(stringParaNumero));
+                $scope.irradiacaoSolar = parseFloat(valorFormatado.toFixed(2));
+                console.log($scope.irradiacaoSolar);
+                console.log(typeof $scope.irradiacaoSolar);
             }
-        })
-        .fail(function(error) {
-            alert("Erro ao carregar os dados da Irradiação");
-            console.error(error)
-        });
+        }
     }
     
-    //Para dispostivos moveis
-    $(document).ready(function(){
-        var tam = $(window).width();
-      
-        if (tam <= 770){
-            $scope.$apply(function(){
-                $scope.unico = true;
-            });
-
-            $("#btn-apagar").removeClass("col");
-            $("#btn-apagar").addClass("col-3");
-        }
-    });
-
-    
-
     //* Codigo pegando dados do arquivo xml
     getXML = function() {
         $scope.topTres = [];
@@ -393,7 +423,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                                     $scope.topTres = $scope.topTres.sort(compare);
                                     $scope.$apply(function(){
                                         $scope.carregando = false;
-                                        arrayPronto();
+                                        arrayTopTres();
                                         // console.log($scope.topTres);
                                     });
                                 }, 800);
@@ -407,6 +437,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         });
     }
 
+    //orderna do menor para o maior
     customSort = function (a, b) {
         return (Number(a.match(/(\d+)/g)[0]) - Number((b.match(/(\d+)/g)[0])));
     }
@@ -421,7 +452,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         return 0;
     }
 
-    arrayPronto = function() {
+    arrayTopTres = function() {
         $scope.carregando = false;
         $scope.cdInput = "grupo";
         $scope.precoKit = parseFloat($scope.topTres[0].precoeup);
@@ -433,5 +464,20 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         $scope.precoKit = parseFloat(preco);
         valorInvestimento();
     }
+
+    //Para dispostivos moveis
+    $(document).ready(function(){
+        var tam = $(window).width();
+      
+        if (tam <= 770){
+            $scope.$apply(function(){
+                $scope.unico = true;
+            });
+
+            $("#btn-apagar").removeClass("col-3");
+            $("#btn-apagar").addClass("col-4");
+        }
+    });
+
 }]);
  
