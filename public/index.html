@@ -42,19 +42,19 @@
         </div>
         
 		<div class="botoes">
-            <div ng-if="!unico" class="row justify-content-end">
+            <div ng-show="!unico" class="row justify-content-end">
                 <button id="btn-apagar" class="select-button btn col-3 calc-button" ng-click="apagar()">C</button>
-                <button class="select-button btn btn-selecionar col calc-button" ng-click="valor('consumo')">Consumo(kWh)</button>
-                <button class="select-button btn btn-selecionar col calc-button" ng-click="valor('reais')">Valor em Reais</button>
+                <button class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('consumo')">Consumo(kWh)</button>
+                <button class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('reais')">Valor em Reais</button>
             </div>
 
             <!-- em dispositivos moveis, os selects ficam em linhas individuais -->
-            <div ng-if="unico" class="row">
+            <div ng-show="unico" class="row">
                 <button id="btn-apagar" class="select-button btn col-3 calc-button" ng-click="apagar()">C</button>
             </div>
-            <div ng-if="unico" class="row">
-                <button style="font-size: 12px;" class="select-button btn btn-selecionar col calc-button" ng-click="valor('consumo')">Consumo(kWh)</button>
-                <button style="font-size: 12px;" class="select-button btn btn-selecionar col calc-button" ng-click="valor('reais')">Valor em Reais</button>
+            <div ng-show="unico" class="row">
+                <button style="font-size: 12px;" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('consumo')">Consumo(kWh)</button>
+                <button style="font-size: 12px;" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('reais')">Valor em Reais</button>
             </div>
             <!--  -->
 
@@ -68,7 +68,7 @@
                 <input id="local" class="btn btn-mostrar col calc-button" value="UF" readonly></input>
             </div>
 
-            <div ng-if="!unico" class="row">    
+            <div ng-show="!unico" class="row">    
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
                     <option value="" disabled hidden>{{selectedPotPainel}}</option>
                 </select>
@@ -78,12 +78,12 @@
             </div>
 
             <!-- em dispositivos moveis, os selects ficam em linhas individuais -->
-            <div ng-if="unico" class="row">
+            <div ng-show="unico" class="row">
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
                     <option value="" disabled hidden>{{selectedPotPainel}}</option>
                 </select>
             </div>
-            <div ng-if="unico" class="row">
+            <div ng-show="unico" class="row">
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedEstrutura = estruturas[0].nome" ng-model="selectedEstrutura" ng-options="estrutura.nome for estrutura in estruturas" ng-change="estrutura()">
                     <option value="" disabled hidden>{{selectedEstrutura}}</option>
                 </select>

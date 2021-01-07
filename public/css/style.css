@@ -30,7 +30,7 @@ img {
     border-radius: 20px;
     /* box-shadow: 10px 10px 8px #888888; */
     box-shadow: 0 4px 8px 10px rgba(0, 0, 0, 0.2), 0 0 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: #DCDCDC;
+    background-color: #E8E8E8;
     margin-bottom: 40px;
 }
 
@@ -40,14 +40,14 @@ img {
     box-shadow: none;
     width: 100%;
     height: 80px;
-    padding: 0 20px 0 0;
+    padding: 0 20px 25px 0;
     text-align: right;
     font-size: 60px;
     outline: none;
 }
 
 .container-fluid button {
-    color: #f6f6f6;
+    color: #000;
     font-weight: 500;
 }
 
@@ -59,7 +59,7 @@ img {
 
 
 .container-fluid .div-input {
-    background-color: #DCDCDC;
+    background-color: #E8E8E8;
     border: 2px solid #fff;
     margin: 10px 5px 0px 5px;
     border-radius: 20px;
@@ -88,7 +88,7 @@ img {
     text-align: center;
     padding: 0;
     line-height: 0;
-    color: #f6f6f6;
+    color: #000;
     font-weight: 500;
 }
 
@@ -98,14 +98,14 @@ img {
 }
 
 .container-fluid select {
-    color: #f6f6f6;
+    color: #000;
     font-weight: 500;
     text-align: center; /* para firefox */
     text-align-last: center; /* para chrome */
 }
 
 .botoes {
-    background-color: #DCDCDC;
+    background-color: #E8E8E8;
     padding: 20px;
 }
 
@@ -120,6 +120,7 @@ img {
 }
 
 .container-fluid .btn-mostrar  {
+    color: #f6f6f6;
     box-shadow: 0 5px 0 #34648b;
     background-color: #4682B4;
 }
@@ -130,11 +131,12 @@ img {
 
 .container-fluid .btn-selecionar {
     box-shadow: 0 5px 0 #9b9898;
-    background-color: #B5B5B5;
+    background-color: #fff;
     margin: 15px 5px;
 }
 
 #btn-apagar {
+    color: #f6f6f6;
     border-radius: 50% !important;
     box-shadow: 0 5px 0 #db7070;
     background-color: #F08080;
