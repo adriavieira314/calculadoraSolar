@@ -291,7 +291,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         url: "../../assets/irradiacaoSolar.csv",
         dataType: "text",
         success: function(csv) {
-            var lines = csv.split("\r");
+            var lines = csv.split("\n");
             console.log(lines);
       
             for(let i = 0; i < lines.length; i++){
