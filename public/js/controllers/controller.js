@@ -108,33 +108,23 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         } else {
             var energia = $scope.inputValor/0.92;
             $scope.energia = Math.floor(energia);
-            console.log('$scope.energia ' + $scope.energia);
         }
     }
     
     calculoPotenciaPico = function() {
         $scope.potPico = $scope.energia/(30 * $scope.irradiacaoSolar * 0.80);
-        console.log($scope.irradiacaoSolar);
-        console.log('$scope.potPico ' + $scope.potPico);
     }
 
     calculoQtdPaineis = function() {
-        console.log('$scope.potPainel ' + $scope.potPainel);
         var painel = $scope.potPico/$scope.potPainel;
         $scope.paineis = Math.floor(painel);
-        console.log('$scope.potPico ' + $scope.potPico);
         if ($scope.paineis %  2 === 1) {
             $scope.paineis++;
-        }
-
-        if ($scope.paineis === 0) {
-            $scope.paineis += 2;
         }
     }
 
     calculoArea = function() {
         $scope.area = 2.03 * $scope.paineis;
-        console.log('$scope.area ' + $scope.area);
     }
 
     tipoGrupo = function() {
@@ -272,7 +262,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                     }
                 })
                 .fail(function(error) {
-                    console.log( "error" + error );
+                    console.log("error: " + error );
                     alert('Erro ao buscar CEP')
                 });
             } //end if.
@@ -332,8 +322,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
 
                 var valorFormatado = parseFloat(formatarValor(stringParaNumero));
                 $scope.irradiacaoSolar = parseFloat(valorFormatado.toFixed(2));
-                console.log($scope.irradiacaoSolar);
-                console.log(typeof $scope.irradiacaoSolar);
             }
         }
     }
@@ -378,9 +366,6 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                                 var potenciaKVAasNumber = parseFloat(stringToNumber.toFixed(2));
 
                                 if (potenciaWAsNumber >= menosUm && potenciaWAsNumber <= maisUm || potenciaKVAasNumber >= menosUm && potenciaKVAasNumber <= maisUm) { 
-                                    console.log(potenciaWAsNumber);
-                                    console.log(potenciaKVAasNumber);
-                                    console.log(response.produtos.produto[index]);
                                     preco.push(response.produtos.produto[index].precoeup);
 
                                     //verificando se valor tem mais de 12 caracteres e retirando-o do array
