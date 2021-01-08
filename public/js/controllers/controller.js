@@ -36,7 +36,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         {id: 2, nome: "Colonial"},
         {id: 3, nome: "Laje"},
         {id: 4, nome: "Solo"},
-        {id: 5, nome: "Fibrocimento"}
+        {id: 5, nome: "Ondulada"}
     ]
     
     $scope.cep = function() {
@@ -96,8 +96,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
             valorEstrutura = pegaEstrutura.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toUpperCase();
 
         } else {
-            //o tipo de estrutura para telha fibrocimento é parafuso estrutural na Aldo
-            pegaEstrutura = 'parafuso';
+            pegaEstrutura = $scope.estruturas[4].nome;
             valorEstrutura = pegaEstrutura.normalize("NFD").replace(/[\u0300-\u036f]/g, '').toUpperCase();
         }
     }
@@ -149,7 +148,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
             $scope.carregando = true;
             $scope.cdInput = "carregando";
             $scope.grupo = "Grupo B";
-            // getXML();
+            getXML();
         }
     }
 
@@ -343,6 +342,11 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
     getXML = function() {
         $scope.topTres = [];
         preco = [];
+        var menosUm = $scope.potPico;
+        var maisUm = $scope.potPico;
+        menosUm--;
+        maisUm++
+    
 
         $http.get(caminhoXML, { 
             transformResponse: function (cnv) {
@@ -364,58 +368,59 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
                             var estrutura = tipo.split(" ");
     
                             if (estrutura.includes(valorEstrutura)) {
-                                //se o produto de estrutura colonial obtiver o atributo TENSAO_SAIDA
-                                if (response.produtos.produto[index].atributos.TENSAO_SAIDA) { 
-                                    //pegando a tensao do produto e tirando o V de volt deixando somente as strings de numeros e convertendo-os
-                                    var stringTensao = response.produtos.produto[index].atributos.TENSAO_SAIDA;
-                                    var string = stringTensao.slice(0, 3);
-                                    var tensao = parseInt(string);
+                                //potencia pico do produto ON GRID
+                                var potenciaW = response.produtos.produto[index].atributos.POTENCIA_W;
+                                var stringToNumber = parseFloat(potenciaW);
+                                var potenciaWAsNumber = parseFloat(stringToNumber.toFixed(2));
+                                //potencia pico do produto OFF GRID
+                                var potenciaKVA = response.produtos.produto[index].atributos.POTENCIA_KVA;
+                                var stringToNumber = parseFloat(potenciaKVA);
+                                var potenciaKVAasNumber = parseFloat(stringToNumber.toFixed(2));
 
-                                    if (tensao <= 220) {
-                                        preco.push(response.produtos.produto[index].precoeup);
-                                    }
-                                } else { //se nao existir o atributo, adicione mesmo assim
+                                if (potenciaWAsNumber >= menosUm && potenciaWAsNumber <= maisUm || potenciaKVAasNumber >= menosUm && potenciaKVAasNumber <= maisUm) { 
+                                    console.log(potenciaWAsNumber);
+                                    console.log(potenciaKVAasNumber);
+                                    console.log(response.produtos.produto[index]);
                                     preco.push(response.produtos.produto[index].precoeup);
+
+                                    //verificando se valor tem mais de 12 caracteres e retirando-o do array
+                                    for (let i = 0; i < preco.length; i++) {
+                                        if (preco[i].length === 12) {
+                                            var elemento = preco.indexOf(preco[i]);
+                                            preco.splice(elemento, 1);
+                                        }
+                                    }
+
+                                    //orderna os precos do menor para o maior
+                                    var sorting = preco.sort(customSort);
+
+                                    //adiciona aos array, os tres produtos com preços baixos
+                                    setTimeout(function () {
+                                        if (response.produtos.produto[index].precoeup === sorting[0]) {
+                                            $scope.topTres.push(response.produtos.produto[index]);
+                                        }
+                                        if (response.produtos.produto[index].precoeup === sorting[1]) {
+                                            $scope.topTres.push(response.produtos.produto[index]);
+                                        }
+                                        if (response.produtos.produto[index].precoeup === sorting[2]) {
+                                            $scope.topTres.push(response.produtos.produto[index]);
+                                        }
+                                        
+                                        //há casos com mais de um produto com o mesmo preco e isso causa um bug, esse código previne de ocorrer bug
+                                        $scope.topTres = $scope.topTres.filter(function (a) {
+                                            return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
+                                        }, Object.create(null));
+
+                                        //limita o tamanho do array a 3
+                                        $scope.topTres = $scope.topTres.slice(0,3);
+
+                                        $scope.topTres = $scope.topTres.sort(compare);
+                                        $scope.$apply(function(){
+                                            $scope.carregando = false;
+                                            arrayIsReady();
+                                        });
+                                    }, 800);
                                 }
-
-                                //verificando se valor tem mais de 12 caracteres e retirando-o do array
-                                for (let i = 0; i < preco.length; i++) {
-                                    if (preco[i].length === 12) {
-                                        var elemento = preco.indexOf(preco[i]);
-                                        preco.splice(elemento, 1);
-                                    }
-                                }
-
-                                //orderna do menor para o maior
-                                var sorting = preco.sort(customSort);
-
-                                //adiciona aos array, os tres produtos com preços baixos
-                                setTimeout(function () {
-                                    if (response.produtos.produto[index].precoeup === sorting[0]) {
-                                        $scope.topTres.push(response.produtos.produto[index]);
-                                    }
-                                    if (response.produtos.produto[index].precoeup === sorting[1]) {
-                                        $scope.topTres.push(response.produtos.produto[index]);
-                                    }
-                                    if (response.produtos.produto[index].precoeup === sorting[2]) {
-                                        $scope.topTres.push(response.produtos.produto[index]);
-                                    }
-                                    
-                                    //há casos com mais de um produto com o mesmo preco e isso causa um bug, esse código previne de ocorrer bug
-                                    $scope.topTres = $scope.topTres.filter(function (a) {
-                                        return !this[JSON.stringify(a)] && (this[JSON.stringify(a)] = true);
-                                    }, Object.create(null));
-
-                                    //limita o tamanho do array a 3
-                                    $scope.topTres = $scope.topTres.slice(0,3);
-
-                                    $scope.topTres = $scope.topTres.sort(compare);
-                                    $scope.$apply(function(){
-                                        $scope.carregando = false;
-                                        arrayTopTres();
-                                        // console.log($scope.topTres);
-                                    });
-                                }, 800);
                             }
                         }
                     }
@@ -441,7 +446,7 @@ app.controller('Calculadora', ['$scope', '$http', function($scope, $http) {
         return 0;
     }
 
-    arrayTopTres = function() {
+    arrayIsReady = function() {
         $scope.carregando = false;
         $scope.cdInput = "grupo";
         $scope.precoKit = parseFloat($scope.topTres[0].precoeup);
