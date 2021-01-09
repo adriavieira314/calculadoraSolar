@@ -44,8 +44,8 @@
 		<div class="botoes">
             <div ng-show="!unico" class="row justify-content-end">
                 <button id="btn-apagar" class="select-button btn col-3 calc-button" ng-click="apagar()">C</button>
-                <button class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('consumo')">Consumo(kWh)</button>
-                <button class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('reais')">Valor em Reais</button>
+                <button id="btn-consumo" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('consumo')">Consumo(kWh)</button>
+                <button id="btn-reais" class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-click="valor('reais')">Valor em Reais</button>
             </div>
 
             <!-- em dispositivos moveis, os selects ficam em linhas individuais -->
@@ -68,10 +68,12 @@
                 <input id="local" class="btn btn-mostrar col calc-button" value="UF" readonly></input>
             </div>
 
-            <div ng-show="!unico" class="row">    
+            <div ng-show="!unico" class="row">
+                <p id="painel">Potência Painel:</p>
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
                     <option value="" disabled hidden>{{selectedPotPainel}}</option>
                 </select>
+                <p id="estrutura">Tipo de Estrutura:</p>
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedEstrutura = estruturas[0].nome" ng-model="selectedEstrutura" ng-options="estrutura.nome for estrutura in estruturas" ng-change="estrutura()">
                     <option value="" disabled hidden>{{selectedEstrutura}}</option>
                 </select>
@@ -79,11 +81,13 @@
 
             <!-- em dispositivos moveis, os selects ficam em linhas individuais -->
             <div ng-show="unico" class="row">
+                <p id="painel" style="left: 65px;">Potência Painel:</p>
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedPotPainel = potenciaPainel[1].potencia" ng-model="selectedPotPainel" ng-options="painel.potencia for painel in potenciaPainel" ng-change="painel()">
                     <option value="" disabled hidden>{{selectedPotPainel}}</option>
                 </select>
             </div>
             <div ng-show="unico" class="row">
+                <p id="estrutura" style="left: 65px;">Tipo de Estrutura:</p>
                 <select class="select-button btn btn-selecionar col calc-button" ng-disabled="cepInformado == false" ng-init="selectedEstrutura = estruturas[0].nome" ng-model="selectedEstrutura" ng-options="estrutura.nome for estrutura in estruturas" ng-change="estrutura()">
                     <option value="" disabled hidden>{{selectedEstrutura}}</option>
                 </select>

@@ -193,6 +193,27 @@ img {
     box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
 }
 
+select {
+    margin-top: 30px !important;
+}
+
+#painel, #estrutura {
+    color: #000;
+    font-weight: 500;
+    font-size: 13px;
+    margin-top: 5px;
+    position: absolute;
+    z-index: 1;
+}
+
+#painel {
+    left: 35%;
+}
+
+#estrutura {
+    left: 51%;
+}
+
 @media only screen and (max-width: 1200px) {
     .container-fluid {
         max-width: 50vw;
@@ -207,11 +228,24 @@ img {
         width: 10em;
         height: 2em;
     }
+
+    #painel {
+        left: 29%;
+    }
+    
+    #estrutura {
+        left: 52%;
+    }
 }
 
 @media only screen and (max-width: 1060px) {
     .container-fluid {
         max-width: 50vw;
+    }
+
+    #btn-consumo,
+    #btn-reais {
+        font-size: 14px;
     }
 }
 
@@ -227,6 +261,14 @@ img {
     .card {
         margin: 0 10px;
     }
+
+    #painel {
+        left: 26%;
+    }
+    
+    #estrutura {
+        left: 53%;
+    }
 }
 
 @media only screen and (max-width: 770px) {
@@ -241,6 +283,11 @@ img {
 
     .container-fluid .inputdigita {
         font-size: 2em;
+    }
+
+    #btn-consumo,
+    #btn-reais {
+        font-size: 12px;
     }
 }
 
@@ -258,6 +305,14 @@ img {
     .card {
         margin: 10px 0;
         width: 70vw !important;
+    }
+
+    #painel {
+        left: 23%;
+    }
+    
+    #estrutura {
+        left: 55%;
     }
 }
 
@@ -279,5 +334,18 @@ img {
     .card {
         margin: 10px 0;
         width: 90vw !important;
+    }
+
+    #btn-consumo,
+    #btn-reais {
+        font-size: 10px;
+    }
+
+    #painel {
+        left: 15%;
+    }
+    
+    #estrutura {
+        left: 55%;
     }
 }
